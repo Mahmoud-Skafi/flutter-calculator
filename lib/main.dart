@@ -9,9 +9,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        // Define the default brightness and colors.
+        brightness: Brightness.dark,
+        primaryColor: Colors.lightBlue[800],
+        accentColor: Colors.cyan[600],
+
+        fontFamily: 'Roboto',
       ),
       home: MyHomePage(title: 'Calculator'),
     );
@@ -37,32 +43,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          centerTitle: false,
-        ),
         body: Column(
-          children: <Widget>[
-            NumberDisplay(value: calculatorString),
-            CalculatorButtons(onTap: _onPressed),
-          ],
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        ));
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top: 50),
+          child: NumberDisplay(value: calculatorString),
+        ),
+        CalculatorButtons(onTap: _onPressed),
+      ],
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    ));
   }
-
-  // _navigateAndDisplayHistory(BuildContext context) async {
-  //   final result = await Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //           builder: (context) => History(operations: calculations)));
-
-  //   if (result != null) {
-  //     setState(() {
-  //       isNewEquation = false;
-  //       calculatorString = Calculator.parseString(result);
-  //     });
-  //   }
-  // }
 
   void _onPressed({String buttonText}) {
     // Standard mathematical operations
@@ -90,7 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
           // only add evaluated strings to calculations array
           calculations.add(calculatorString);
         }
-
         operations.add(Calculations.EQUAL);
         calculatorString = newCalculatorString;
         isNewEquation = false;
